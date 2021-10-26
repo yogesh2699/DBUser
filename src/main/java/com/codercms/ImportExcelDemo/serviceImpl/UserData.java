@@ -143,7 +143,7 @@ public class UserData {
     // take data from db and check values
     List<UserEntity> dbEntities = userRepository.findAll();
     boolean updated = false;
-    /*if (dbEntities.size() == users.size()) {*/
+
 
         for (int i = 0; i < dbEntities.size(); i++) {
             updated = false;
@@ -152,7 +152,7 @@ public class UserData {
                 updated = true;
         }
 
-    //}
+
 
     if (!updated) {
         // Save to db.
