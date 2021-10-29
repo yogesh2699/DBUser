@@ -19,6 +19,7 @@ import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class UserData {
@@ -115,19 +116,19 @@ public class UserData {
                 User user = new User();
 
 
-                user.username = getCellValue(row, 0);
+                user.firstname = getCellValue(row, 0);
                 user.email = getCellValue(row, 1);
-                // user.password = getCellValue(row, 2);
+                user.password = String.valueOf(UUID.randomUUID());
                 user.contact = getCellValue(row, 2);
-                user.uniqueId = getCellValue(row, 3);
+                user.username = getCellValue(row, 3);
 
                 if (isValidate(user).isEmpty()) {
-                    if (user.username != "" && user.email != "" && user.contact != "" && user.uniqueId != "") {
+                    if (user.username != "" && user.email != "" && user.contact != "" && user.firstname != "") {
                         users.add(user);
                     }
                 } else {
                     List<String> exceptions = isValidate(user);
-                    hm.put(user.uniqueId, exceptions);
+                    hm.put(user.username, exceptions);
                 }
             }
         }
@@ -148,7 +149,7 @@ public class UserData {
         for (int i = 0; i < dbEntities.size(); i++) {
             updated = false;
 
-            if (dbEntities.get(i).uniqueId.equals(users.get(i).uniqueId))
+            if (dbEntities.get(i).username.equals(users.get(i).username))
                 updated = true;
         }
 
@@ -161,11 +162,11 @@ public class UserData {
             users.forEach(x -> {
                 UserEntity entity = new UserEntity();
 
-                entity.username = x.username;
+                entity.firstname = x.firstname;
                 entity.email = x.email;
                 entity.contact = x.contact;
-                entity.uniqueId = x.uniqueId;
-                System.out.println(x.uniqueId);
+                entity.password = x.password;
+                entity.username = x.username;
                 entities.add(entity);
             });
             userRepository.saveAll(entities);
@@ -173,5 +174,16 @@ public class UserData {
     }
   return updated;
 }
+
+public String getPasswordsByUsername(String username)
+{
+    try {
+        return userRepository.findByUsername(username);
+    }catch(Exception e)
+    {
+        throw new UserException("Username not found");
+    }
+}
+
 
 }

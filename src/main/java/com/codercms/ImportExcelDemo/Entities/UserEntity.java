@@ -2,19 +2,25 @@ package com.codercms.ImportExcelDemo.Entities;
 
 
 import javax.persistence.*;
+import java.util.UUID;
 
 @Entity
 @Table(name = "users")
 public class UserEntity {
 
-    @Id
-    public String username;
+
+    public String firstname;
 
     public String email;
 
+
+
+   // @Column(columnDefinition = "BINARY(16)")
+    public String password;
    // public String password;
 
     public String contact;
 
-    public String uniqueId;
+    @Id
+    public String username;
 }

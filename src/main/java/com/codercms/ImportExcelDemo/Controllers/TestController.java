@@ -13,6 +13,7 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -62,6 +63,23 @@ public class TestController {
                     return ResponseEntity.status(HttpStatus.ACCEPTED).body(new Message(message + hm));
                 }
         }
+
+
+        @GetMapping(value = "/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
+        public ResponseEntity<String> getPasswordByUsername(@PathVariable("username") String username)
+        {
+            try {
+                String user = userService.getPasswordsByUsername(username);
+                user = "Password for " + username  +" is " +user;
+                return new ResponseEntity<String>(user, new HttpHeaders(), HttpStatus.OK);
+            }catch(UserException exception)
+            {
+                return ResponseEntity.status(HttpStatus.ACCEPTED).body(exception.getMessage());
+            }
+        }
+
+ 
+
     }
 
 

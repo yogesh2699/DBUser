@@ -1,38 +1,36 @@
 package com.codercms.ImportExcelDemo.Models;
 
+import java.util.UUID;
+
 /**
  * Model Class to Map entities with database
  */
 public class User {
 
-  public String username;
+  public String firstname;
 
   public String email;
 
- // public String password;
+  public String password;
+
+  public String getPassword() {
+    return password;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
+  }
 
   public String contact;
 
 
-  public String uniqueId;
+  public String username;
   public User() {
   }
 
-  public String getUniqueId() {
-    return uniqueId;
-  }
 
-  public void setUniqueId(String uniqueId) {
-    this.uniqueId = uniqueId;
-  }
 
-  public String getUsername() {
-    return username;
-  }
 
-  public void setUsername(String username) {
-    this.username = username;
-  }
 
   public String getEmail() {
     return email;
@@ -52,28 +50,19 @@ public class User {
     this.contact = contact;
   }
 
+  public String getUsername() {
+    return username;
+  }
 
-
-  public User(String username, String email, String contact) {
-
+  public void setUsername(String username) {
     this.username = username;
-    this.email = email;
-    //this.password = password;
-    this.contact = contact;
   }
 
-  @Override
-  public String toString() {
-    return "User{" +
-            "username='" + username + '\'' +
-            ", email='" + email + '\'' +
-            ", contact='" + contact + '\'' +
-            '}';
+  public String getFirstname() {
+    return firstname;
   }
-  /*
-	 * public int getAge() { return age; }
-	 * 
-	 * public void setAge(int age) { this.age = age; }
-	 */
 
+  public void setFirstname(String firstname) {
+    this.firstname = firstname;
+  }
 }
