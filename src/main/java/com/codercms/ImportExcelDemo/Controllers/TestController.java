@@ -27,6 +27,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import static com.codercms.ImportExcelDemo.serviceImpl.UserData.hm;
+import static com.codercms.ImportExcelDemo.serviceImpl.UserData.records;
+
 // Todo: dynamic and add comments and format code
 // add business logic in service layer
 @RestController
@@ -46,8 +48,9 @@ public class TestController {
      * @throws IOException
      */
     @PostMapping("/import-order-excel")
-    public ResponseEntity<Message> importExcelFile(@RequestParam("file") MultipartFile files) throws IOException {
+    public ResponseEntity<HashMap> importExcelFile(@RequestParam("file") MultipartFile files) throws IOException {
 
+        HashMap<String,String> response = new HashMap<>();
         String message = "";
 
             // Invokes static method in Service Layer
@@ -56,11 +59,14 @@ public class TestController {
                 // Invokes static method in Service Layer StoreInDb
                 if(!userService.storeInDb(users))
                 {
-                    message = "Database updated";
-                    return ResponseEntity.status(HttpStatus.ACCEPTED).body(new Message(message + hm));
+                    response.put("Message","Database updated");
+                    response.put("Error",hm.toString());
+                    return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
                 }else {
-                    message = "File contains same value";
-                    return ResponseEntity.status(HttpStatus.ACCEPTED).body(new Message(message + hm));
+                    response.put("Message","File contains same value");
+                    response.put("Error",hm.toString());
+                    response.put("Duplicate Entities",records.toString());
+                    return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
                 }
         }
 
@@ -78,7 +84,7 @@ public class TestController {
             }
         }
 
- 
+
 
     }
 

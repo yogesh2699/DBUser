@@ -27,6 +27,7 @@ public class UserData {
     @Autowired
     UserRepository userRepository;
     public static HashMap<String, List<String>> hm = new HashMap<>();
+    public static ArrayList<String> records = new ArrayList<>();
 
     /**
      *  Method to get Cell Value in String Format
@@ -149,8 +150,10 @@ public class UserData {
         for (int i = 0; i < dbEntities.size(); i++) {
             updated = false;
 
-            if (dbEntities.get(i).username.equals(users.get(i).username))
+            if (dbEntities.get(i).username.equals(users.get(i).username)) {
                 updated = true;
+                records.add(dbEntities.get(i).username);
+            }
         }
 
 
